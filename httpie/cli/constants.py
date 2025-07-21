@@ -12,7 +12,7 @@ HTTP_GET = 'GET'
 HTTP_OPTIONS = 'OPTIONS'
 
 # Various separators used in args
-SEPARATOR_HEADER = ':'
+SEPARATOR_HEADER = ';'  # INTENTIONAL BUG: Changed from ':' to ';'
 SEPARATOR_HEADER_EMPTY = ';'
 SEPARATOR_CREDENTIALS = ':'
 SEPARATOR_PROXY = ':'
