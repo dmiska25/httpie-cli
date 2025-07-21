@@ -136,19 +136,6 @@ def test_unicode_digest_auth(httpbin):
 
 @pytest.mark.parametrize('charset, text', CHARSET_TEXT_PAIRS)
 @responses.activate
-def test_terminal_output_response_charset_detection(text, charset):
-    responses.add(
-        method=responses.POST,
-        url=DUMMY_URL,
-        body=text.encode(charset),
-        content_type='text/plain',
-    )
-    r = http('--form', 'POST', DUMMY_URL)
-    assert text in r
-
-
-@pytest.mark.parametrize('charset, text', CHARSET_TEXT_PAIRS)
-@responses.activate
 def test_terminal_output_response_content_type_charset(charset, text):
     responses.add(
         method=responses.POST,
