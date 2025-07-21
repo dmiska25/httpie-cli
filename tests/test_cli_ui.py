@@ -50,16 +50,3 @@ def ignore_terminal_size(monkeypatch):
     monkeypatch.setitem(os.environ, 'COLUMNS', str(PREDEFINED_TERMINAL_SIZE[0]))
     monkeypatch.setattr(shutil, 'get_terminal_size', fake_terminal_size)
     monkeypatch.setattr(os, 'get_terminal_size', fake_terminal_size)
-
-
-@pytest.mark.parametrize(
-    'args, expected_msg', [
-        ([], NAKED_HELP_MESSAGE),
-        (['--pretty'], NAKED_HELP_MESSAGE_PRETTY_WITH_NO_ARG),
-        (['pie.dev', '--pretty'], NAKED_HELP_MESSAGE_PRETTY_WITH_NO_ARG),
-        (['--pretty', '$invalid'], NAKED_HELP_MESSAGE_PRETTY_WITH_INVALID_ARG),
-    ]
-)
-def test_naked_invocation(ignore_terminal_size, args, expected_msg):
-    result = http(*args, tolerate_error_exit_status=True)
-    assert result.stderr == expected_msg

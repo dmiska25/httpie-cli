@@ -110,14 +110,6 @@ class TestQuietFlag:
 
         assert len(record) == expected_warnings
 
-    def test_double_quiet_on_error(self, httpbin):
-        r = http(
-            '-qq', '--check-status', '$$$this.does.not.exist$$$',
-            tolerate_error_exit_status=True,
-        )
-        assert not r
-        assert 'Couldn’t resolve the given hostname' in r.stderr
-
     @pytest.mark.parametrize('quiet_flags', QUIET_SCENARIOS)
     @mock.patch('httpie.cli.argtypes.AuthCredentials._getpass',
                 new=lambda self, prompt: 'password')

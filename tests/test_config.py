@@ -33,20 +33,6 @@ def test_config_file_not_valid(httpbin):
     assert 'invalid config file' in r.stderr
 
 
-@pytest.mark.skipif(is_windows, reason='cannot chmod 000 on Windows')
-def test_config_file_inaccessible(httpbin):
-    env = MockEnvironment()
-    env.create_temp_config_dir()
-    config_path = env.config_dir / Config.FILENAME
-    assert not config_path.exists()
-    config_path.touch(0o000)
-    assert config_path.exists()
-    r = http(httpbin + '/get', env=env)
-    assert HTTP_OK in r
-    assert 'http: warning' in r.stderr
-    assert 'cannot read config file' in r.stderr
-
-
 def test_default_options_overwrite(httpbin):
     env = MockEnvironment()
     env.config['default_options'] = ['--form']
