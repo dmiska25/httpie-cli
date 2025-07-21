@@ -28,11 +28,9 @@ def http_status_to_exit_status(http_status: int, follow=False) -> ExitStatus:
 
     """
     if 300 <= http_status <= 399 and not follow:
-        # Redirect - INTENTIONAL BUG: returning wrong exit status
-        return ExitStatus.ERROR_HTTP_4XX
+        return ExitStatus.ERROR_HTTP_3XX
     elif 400 <= http_status <= 499:
-        # Client Error - INTENTIONAL BUG: returning wrong exit status
-        return ExitStatus.ERROR_HTTP_5XX
+        return ExitStatus.ERROR_HTTP_4XX
     elif 500 <= http_status <= 599:
         # Server Error
         return ExitStatus.ERROR_HTTP_5XX
