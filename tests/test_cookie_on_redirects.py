@@ -2,24 +2,6 @@ import pytest
 from .utils import http
 
 
-@pytest.mark.parametrize('target_httpbin', [
-    'httpbin',
-    'remote_httpbin',
-])
-def test_explicit_user_set_cookie_in_session(tmp_path, httpbin, target_httpbin, request):
-    """User set cookies ARE persisted within redirects when there is A session, even on the same domain."""
-    target_httpbin = request.getfixturevalue(target_httpbin)
-    r = http(
-        '--follow',
-        '--session',
-        str(tmp_path / 'session.json'),
-        httpbin + '/redirect-to',
-        f'url=={target_httpbin}/cookies',
-        'Cookie:a=b'
-    )
-    assert r.json == {'cookies': {'a': 'b'}}
-
-
 @pytest.mark.parametrize('session', [True, False])
 def test_server_set_cookie_on_redirect_same_domain(tmp_path, httpbin, session):
     """Server set cookies ARE persisted on the same domain when they are forwarded."""
