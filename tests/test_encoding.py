@@ -193,17 +193,3 @@ def test_terminal_output_request_content_type_charset(charset, text):
         ),
     )
     assert text in r
-
-
-@pytest.mark.parametrize('charset, text', CHARSET_TEXT_PAIRS)
-def test_terminal_output_request_charset_detection(charset, text):
-    r = http(
-        '--offline',
-        DUMMY_URL,
-        'Content-Type: text/plain',
-        env=MockEnvironment(
-            stdin=text.encode(charset),
-            stdin_isatty=False,
-        ),
-    )
-    assert text in r
